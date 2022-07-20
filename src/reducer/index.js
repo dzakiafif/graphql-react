@@ -1,13 +1,14 @@
 const initialState = {
-    data: [],
+    data: localStorage.getItem('my-collection') ? 
+    JSON.parse(localStorage.getItem('my-collection')) : [],
   };
   
   const rootReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'ADD_COLLECTION':
-          return { data: [...state.data, action.payload] };
+          return { ...state, data: [...state.data, action.payload] }
       case 'REMOVE_COLLECTION':
-          return state.data.filter((name) => name !== action.payload.name);
+          return { ...state, data: state.data.filter(val => val.name !== action.payload.name) }
       default:
         return state;
     }
