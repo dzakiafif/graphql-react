@@ -12,8 +12,7 @@ const initialState = {
       case 'ADD_COLLECTION_ITEM':
           const checkCollection = state.data.filter(val => val.name === action.payload.name);
           checkCollection.length > 0 && checkCollection.forEach(val => val.collectionItem.push(action.payload.collectionItem));
-          console.log({ ...state, data: checkCollection });
-          return;
+          return { ...state, data: checkCollection };
       default:
         return state;
     }
