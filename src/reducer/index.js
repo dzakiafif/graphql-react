@@ -11,8 +11,12 @@ const initialState = {
           return { ...state, data: state.data.filter(val => val.name !== action.payload.name) }
       case 'ADD_COLLECTION_ITEM':
           const checkCollection = state.data.filter(val => val.name === action.payload.name);
-          checkCollection.length > 0 && checkCollection.forEach(val => val.collectionItem.push(action.payload.collectionItem));
+          checkCollection.length > 0 && checkCollection.map(val => val.collectionItem.push(action.payload.collectionItem));
           return { ...state, data: checkCollection };
+      case 'REMOVE_COLLECTION_ITEM':
+          const checkCollectionRemoveItem = state.data.filter(val => val.name === action.payload.name);
+          checkCollectionRemoveItem.length > 0 && checkCollectionRemoveItem.map(val => val.collectionItem = val.collectionItem.filter(val => val.name !== action.payload.collectionItem.name));
+          return { ...state, data: checkCollectionRemoveItem };
       default:
         return state;
     }

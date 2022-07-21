@@ -18,7 +18,8 @@ const AnimeDetail = () => {
             <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} />
             <label>input collection item</label>
             <input type="text" onChange={(e) => setCollectionItem(e.target.value)} value={collectionItem} />
-            <button onClick={() => dispatch({ type: 'ADD_COLLECTION_ITEM', payload: { name: title, collectionItem: { name: collectionItem } } })}>test</button>
+            <button onClick={() => dispatch({ type: 'REMOVE_COLLECTION_ITEM', payload: { name: title, collectionItem: { name: collectionItem } } })}>test</button>
+            {/* <button onClick={() => dispatch({ type: 'ADD_COLLECTION_ITEM', payload: { name: title, collectionItem: { name: collectionItem } } })}>test</button> */}
             {/* <button onClick={() => dispatch({ type: 'REMOVE_COLLECTION', payload: { name: title } })}>test</button> */}
             {/* <button onClick={() => dispatch({ type: 'ADD_COLLECTION', payload: { name: title, collectionItem: [] } })}>test</button> */}
         </div>
