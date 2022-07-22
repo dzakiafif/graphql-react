@@ -1,4 +1,5 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from 'react-router-dom'
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { LIST_ANIME } from "../../graphql/queries";
@@ -14,6 +15,7 @@ function Homepage() {
   const { loading, error, data, fetchMore } = useQuery(LIST_ANIME, {
     variables: { page: 1, perPage: 10 },
   });
+  const navigate = useNavigate();
 
   if (loading) return <Loader />
 
@@ -35,9 +37,9 @@ function Homepage() {
       });
   };
 
-  const handleModal = (data) => {
+  const handleDetail = (data) => {
     setDatas(data);
-    setShowModalDetail(true);
+    navigate(`/anime-detail/${data.id}`);
   };
 
   const handleAddCollection = (data) => {
@@ -56,12 +58,11 @@ function Homepage() {
         pageStart={0}
         loadMore={handleLoadMore}
         hasMore={data?.Page.pageInfo.hasNextPage}
-        loader={<Loader key={0} />}
-      >
+        loader={<Loader key={0} />}>
         <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {data?.Page.media.map((val, i) => (
             <div
-              onClick={() => handleModal(val)}
+              onClick={() => handleDetail(val)}
               className="bg-gray-100 px-4 py-4 rounded-xl"
               key={i}
             >
@@ -77,7 +78,7 @@ function Homepage() {
                 {val.title.native.slice(0, 17) + "..."}
               </h1>
               <h1 className="pt-3 font-poppins font-semibold text-sm text-right">
-                {`Popularity: ${new Intl.NumberFormat("id", {
+                {`${new Intl.NumberFormat("id", {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 2,
                 }).format(val.popularity)} viewers`}

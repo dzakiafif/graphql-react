@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { DarkLightContext } from "../context";
+import { DarkLightContext } from "../../context";
 
-function Navbar(){
+const Navbar= () => {
     const { darkMode, toggleDarkMode} = useContext(DarkLightContext)
     const handleToggleDarkMode = () => { 
         toggleDarkMode()
@@ -12,9 +12,9 @@ function Navbar(){
             <div className="flex justify-between place-items-center py-1 px-4 md:flex md:justify-between md:px-6 md:py-4 md:place-items-center">
                 <h1 className="text-3xl md:text-2xl font-bold mr-4 text-white font-poppins">AnimeList</h1>
                 <div className="flex flex-row place-items-center space-x-10">
-                    <ul className="hidden md:flex space-x-8">
-                        <li className="text-white font-poppins"><a href="/">Homepage</a></li>
-                        <li className="text-white font-poppins"><a href="/collection">My Collection</a></li>
+                    <ul className="hidden md:flex space-x-3">
+                        <li className="text-white font-poppins bg-blue-600 w-36 text-center py-2 rounded-lg"><a href="/">Homepage</a></li>
+                        <li className="text-white font-poppins w-36 text-center py-2"><a href="/collection">My Collection</a></li>
                     </ul>
 
                     <div onClick={() => handleToggleDarkMode()}>

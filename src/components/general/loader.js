@@ -1,4 +1,4 @@
-function Loader(){
+const Loader = () => {
     let circleCommonClasses = 'h-2.5 w-2.5 rounded-full bg-blue-600 mb-8'
 
     return(

@@ -20,7 +20,7 @@ export const LIST_ANIME = gql`
         }
         coverImage {
           large
-        },
+        }
         popularity
         description
         status
@@ -48,9 +48,16 @@ export const DETAIL_ANIME = gql`
       title {
         romaji
         native
+        english
+      }
+      coverImage {
+        large
       }
       type
       status
+      tags {
+        name
+      }
       format
       description
       startDate {
