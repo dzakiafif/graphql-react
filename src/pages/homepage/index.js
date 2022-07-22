@@ -16,12 +16,10 @@ function Homepage() {
             perPage: 10
         },
         updateQuery: (prevResult, { fetchMoreResult }) => {
-            fetchMoreResult.media = [
+            fetchMoreResult.Page.media = [
                 ...prevResult.Page.media,
                 ...fetchMoreResult.Page.media
             ];
-
-            console.log(fetchMoreResult);
 
             return fetchMoreResult;
         }
