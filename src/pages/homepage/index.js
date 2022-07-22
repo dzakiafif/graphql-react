@@ -5,25 +5,26 @@ import { LIST_ANIME } from "../../graphql/queries";
 function Homepage() {
   const [showModalDetail, setShowModalDetail] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
+  const [hide, setHide] = useState(false);
   const { loading, error, data, fetchMore } = useQuery(LIST_ANIME, {
     variables: { page: 1, perPage: 10 },
   });
 
   const handleLoadMore = () => {
-    data?.Page.pageInfo.currentPage < data?.Page.pageInfo.lastPage && fetchMore({
-        variables: {
-            page: data?.Page.pageInfo.currentPage + 1,
-            perPage: 10
-        },
-        updateQuery: (prevResult, { fetchMoreResult }) => {
-            fetchMoreResult.Page.media = [
-                ...prevResult.Page.media,
-                ...fetchMoreResult.Page.media
-            ];
+    data?.Page.pageInfo.hasNextPage ? fetchMore({
+      variables: {
+          page: data?.Page.pageInfo.currentPage + 1,
+          perPage: 10
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+          fetchMoreResult.Page.media = [
+              ...prevResult.Page.media,
+              ...fetchMoreResult.Page.media
+          ];
 
-            return fetchMoreResult;
-        }
-    })
+          return fetchMoreResult;
+      }
+  }) : setHide(true);
   }
 
   return (
@@ -53,7 +54,7 @@ function Homepage() {
         ))}
       </div>
       
-      <div className="flex justify-center pb-8"><button onClick={() => handleLoadMore()} className="bg-blue-600 px-6 rounded-md text-white font-poppins py-2 hover:bg-blue-800">Load More</button></div>
+      <div className={`flex justify-center pb-8 ${hide ? 'invisible' : 'visible'}`}><button onClick={() => handleLoadMore()} className="bg-blue-600 px-6 rounded-md text-white font-poppins py-2 hover:bg-blue-800">Load More</button></div>
       
 
       {/* Modal detail */}
