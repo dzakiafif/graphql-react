@@ -42,11 +42,11 @@ function Homepage() {
               src={val.coverImage.large}
               alt=""
             />
-            <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44">
+            <h1 className="pt-2 text-base font-poppins font-semibold text-gray-800 w-44">
               {val.title.romaji.slice(0,17) + '...'}
             </h1>
             <h1 className="font-poppins font-medium text-gray-500 text-xs">
-              {val.title.native }
+              {val.title.native.slice(0,17) + '...' }
             </h1>
             <h1 className="pt-3 font-poppins font-semibold text-sm text-right">
               Total Owned: 1
@@ -55,7 +55,8 @@ function Homepage() {
         ))}
       </div>
       
-      <button onClick={() => handleLoadMore()}>Load More</button>
+      <div className="flex justify-center pb-8"><button onClick={() => handleLoadMore()} className="bg-blue-600 px-6 rounded-md text-white font-poppins py-2 hover:bg-blue-800">Load More</button></div>
+      
 
       {/* Modal detail */}
       {showModalDetail ? (
