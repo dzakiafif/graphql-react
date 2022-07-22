@@ -19,7 +19,8 @@ export const LIST_ANIME = gql`
         }
         coverImage {
           large
-        }
+        },
+        popularity
       }
     }
   }

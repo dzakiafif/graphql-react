@@ -48,7 +48,11 @@ function Homepage() {
               {val.title.native.slice(0,17) + '...' }
             </h1>
             <h1 className="pt-3 font-poppins font-semibold text-sm text-right">
-              Total Owned: 1
+              {`Popularity: ${new Intl.NumberFormat('id', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2,
+                      })
+                        .format(val.popularity)} viewers`}
             </h1>
           </div>
         ))}
