@@ -15,7 +15,7 @@ export const LIST_ANIME = gql`
         id
         title {
           romaji
-          english
+          native
         }
         coverImage {
           large
@@ -30,7 +30,7 @@ export const DETAIL_ANIME = gql`
     Media(id: $id) {
       title {
         romaji
-        english
+        native
       }
       type
       status

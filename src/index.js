@@ -6,16 +6,18 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { GlobalStyles } from "twin.macro";
 import ApolloWrapper from "./graphql/client";
-import { AnimeProvider } from "./context";
+import { AnimeProvider, DarkLightProvider } from "./context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <GlobalStyles />
     <AnimeProvider>
-      <ApolloWrapper>
-        <App />
-      </ApolloWrapper>
+      <DarkLightProvider>
+        <ApolloWrapper>
+          <App />
+        </ApolloWrapper>
+      </DarkLightProvider>
     </AnimeProvider>
   </React.StrictMode>
 );
