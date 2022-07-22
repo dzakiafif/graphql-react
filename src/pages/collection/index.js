@@ -1,60 +1,25 @@
-function Collection() {
-  const judul = "Nightwalker: The Midnight Detective";
-  const judul1 = "Strawberry Marshmallow";
+import { useContext } from 'react';
+import { AnimeContext } from '../../context';
 
+function Collection() {
+
+  const { state, dispatch } = useContext(AnimeContext);
   return (
     <>
       <div className="pt-10 pb-20 px-20 place-items-center space-y-5">
         <h1 className="font-bold text-3xl md:text-4xl font-poppins">
           My Anime List
         </h1>
-        <div className="flex flex-row space-x-5 place-items-center">
-          <label className="font-medium font-poppins md:text-base">
-            Search
-          </label>
-          <div className="relative">
-            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-              <svg
-                aria-hidden="true"
-                className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
-              </svg>
-            </div>
-            <input
-              type="search"
-              id="default-search"
-              className="block p-4 pl-10 w-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="type anime title..."
-            />
-            <button
-              type="submit"
-              class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Search
-            </button>
-          </div>
-        </div>
         <div className="pt-5 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
-          <div className="bg-gray-100 px-4 py-4 rounded-xl">
+          {
+            state.data?.map(val => (
+              <div className="bg-gray-100 px-4 py-4 rounded-xl">
             <img
               className="rounded-md w-64 h-96 md:w-52 md:h-72"
               src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/621.jpg"
             />
             <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44">
-              {judul.slice(0, 17) + "..."}
-            </h1>
-            <h1 className="font-poppins font-medium text-gray-500 text-xs">
-              Ini Nama yang disimpan
+              {val.name.length > 17 ? val.name.slice(0, 17) + "..." : val.name}
             </h1>
             <div className="pt-3 text-right">
               <button className="px-5 py-2 font-poppins rounded-md font-semibold text-sm bg-red-500 text-white right-0">
@@ -62,6 +27,8 @@ function Collection() {
               </button>
             </div>
           </div>
+            ))
+          }
         </div>
       </div>
     </>

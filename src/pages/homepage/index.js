@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { LIST_ANIME } from "../../graphql/queries";
-import { Loader } from "../../components"
+import { Loader } from "../../components";
+import { AnimeContext } from "../../context";
 
 function Homepage() {
   const [showModalDetail, setShowModalDetail] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [datas, setDatas] = useState(null);
+  const {state, dispatch} = useContext(AnimeContext);
+  const [names, setNames] = useState("");
   const { loading, error, data, fetchMore } = useQuery(LIST_ANIME, {
     variables: { page: 1, perPage: 10 },
   });
 
-  console.log(datas);
+  if (loading) return <Loader />
 
   const handleLoadMore = () => {
     data?.Page.pageInfo.hasNextPage &&
@@ -35,6 +38,16 @@ function Homepage() {
   const handleModal = (data) => {
     setDatas(data);
     setShowModalDetail(true);
+  };
+
+  const handleAddCollection = (data) => {
+
+    if (state.data.length <= 0) {
+      dispatch({ type: 'ADD_COLLECTION', payload: { name: names, collectionItem: [] } })
+      dispatch({ type: 'ADD_COLLECTION_ITEM', payload: { name: names, collectionItem: data } })
+    } else {
+
+    }
   }
 
   return (
@@ -91,7 +104,9 @@ function Homepage() {
                     />
                     <div className="flex flex-col space-y-2">
                       <h1 className="pt-1 text-lg md:text-2xl font-poppins font-semibold text-gray-800">
-                        {datas.title.english === null ? " this anime doesnt have english title" : datas.title.english}
+                        {datas.title.english === null
+                          ? " this anime doesnt have english title"
+                          : datas.title.english}
                       </h1>
                       <div className="flex flex-col md:flex-row space-y-1 md:space-x-2 md:place-items-center">
                         <h1 className="font-poppins font-medium text-gray-800 text-xs md:text-sm">
@@ -105,14 +120,21 @@ function Homepage() {
                       <h1 className="pt-1 md:pt-3 font-poppins font-semibold text-sm md:text-lg">
                         Description :
                       </h1>
-                      <p className="font-poppins font-medium text-xs md:text-sm text-gray-600" dangerouslySetInnerHTML={{__html: datas.description}} />
+                      <p
+                        className="font-poppins font-medium text-xs md:text-sm text-gray-600"
+                        dangerouslySetInnerHTML={{ __html: datas.description }}
+                      />
                       <div className="flex flex-row space-x-10 md:space-x-14">
                         <div>
                           <h1 className="pt-1 md:t-2 font-poppins font-semibold text-sm md:text-lg">
                             Start Date
                           </h1>
                           <p className="font-poppins font-medium text-xs md:text-sm text-gray-600">
-                          {`${datas.startDate.year} - ${datas.startDate.month < 10 ? `0${datas.startDate.month}` : datas.startDate.month} - ${datas.startDate.day}`}
+                            {`${datas.startDate.year} - ${
+                              datas.startDate.month < 10
+                                ? `0${datas.startDate.month}`
+                                : datas.startDate.month
+                            } - ${datas.startDate.day}`}
                           </p>
                         </div>
 
@@ -121,7 +143,11 @@ function Homepage() {
                             End Date
                           </h1>
                           <p className="font-poppins font-medium text-xs md:text-sm text-gray-600">
-                          {`${datas.endDate.year} - ${datas.endDate.month < 10 ? `0${datas.endDate.month}` : datas.endDate.month} - ${datas.endDate.day}`}
+                            {`${datas.endDate.year} - ${
+                              datas.endDate.month < 10
+                                ? `0${datas.endDate.month}`
+                                : datas.endDate.month
+                            } - ${datas.endDate.day}`}
                           </p>
                         </div>
                       </div>
@@ -139,13 +165,14 @@ function Homepage() {
                   </h1>
                   <div className="relative max-w-[800px]">
                     <div className="flex flex-wrap pt-2 place-items-center space-y-2 space-x-1 left-0">
-                      {
-                        datas.tags.map((val, i) => (
-                          <label key={i} className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                            {val.name}
-                          </label>
-                        ))
-                      }
+                      {datas.tags.map((val, i) => (
+                        <label
+                          key={i}
+                          className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center"
+                        >
+                          {val.name}
+                        </label>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -184,20 +211,23 @@ function Homepage() {
                 <div className="relative p-4 md:p-6 flex-auto">
                   <div className="flex flex-col space-y-2 place-items-center">
                     <h1 className="pt-1 text-sm md:text-lg md:text-2xl font-poppins font-semibold text-gray-800">
-                      Nightwalker: The Midnight Detective
+                      {datas.title.romaji}
                     </h1>
                     <img
                       className="rounded-md w-40 h-56 md:w-52 md:h-72"
-                      src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/621.jpg"
+                      src={datas.coverImage.large}
+                      alt="img2"
                     />
                     <h1 className="font-poppins font-medium text-sm md:text-base">
-                      Type a name and add to my collection
-                    </h1>
-                    <input
-                      className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
-                      type="text"
-                      placeholder="Anime Nickname..."
-                    />
+                          Type a name and add to my collection
+                        </h1>
+                        <input
+                          className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
+                          type="text"
+                          placeholder="Anime Nickname..."
+                          onChange={(e) => setNames(e.target.value)}
+                          value={names}
+                        />
                     <p className="pt-2 text-red-500 font-poppins text-xs md:text-sm font-normal">
                       ini pesan error
                     </p>
@@ -207,7 +237,7 @@ function Homepage() {
                   <button
                     className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModalAdd(true)}
+                    onClick={() => handleAddCollection(datas)}
                   >
                     Add to Collection
                   </button>
