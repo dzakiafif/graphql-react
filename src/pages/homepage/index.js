@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { LIST_ANIME } from "../../graphql/queries";
+import { Loader } from "../../components"
 
 function Homepage() {
   const [showModalDetail, setShowModalDetail] = useState(false);
@@ -35,7 +36,7 @@ function Homepage() {
         pageStart={0}
         loadMore={handleLoadMore}
         hasMore={data?.Page.pageInfo.hasNextPage}
-        loader={<h3>loading...</h3>}
+        loader={<Loader />}
       >
         <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {data?.Page.media.map((val, i) => (
