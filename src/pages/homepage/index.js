@@ -7,10 +7,12 @@ import { Loader } from "../../components"
 function Homepage() {
   const [showModalDetail, setShowModalDetail] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
-  const [hide, setHide] = useState(false);
+  const [datas, setDatas] = useState(null);
   const { loading, error, data, fetchMore } = useQuery(LIST_ANIME, {
     variables: { page: 1, perPage: 10 },
   });
+
+  console.log(datas);
 
   const handleLoadMore = () => {
     data?.Page.pageInfo.hasNextPage &&
@@ -30,18 +32,23 @@ function Homepage() {
       });
   };
 
+  const handleModal = (data) => {
+    setDatas(data);
+    setShowModalDetail(true);
+  }
+
   return (
     <>
       <InfiniteScroll
         pageStart={0}
         loadMore={handleLoadMore}
         hasMore={data?.Page.pageInfo.hasNextPage}
-        loader={<Loader />}
+        loader={<Loader key={0} />}
       >
         <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {data?.Page.media.map((val, i) => (
             <div
-              onClick={() => setShowModalDetail(true)}
+              onClick={() => handleModal(val)}
               className="bg-gray-100 px-4 py-4 rounded-xl"
               key={i}
             >
@@ -79,34 +86,33 @@ function Homepage() {
                   <div className="flex flex-row space-x-8">
                     <img
                       className="rounded-md w-40 h-56 md:w-52 md:h-72"
-                      src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/621.jpg"
+                      src={datas.coverImage.large}
+                      alt="img"
                     />
                     <div className="flex flex-col space-y-2">
                       <h1 className="pt-1 text-lg md:text-2xl font-poppins font-semibold text-gray-800">
-                        Nightwalker: The Midnight Detective
+                        {datas.title.english === null ? " this anime doesnt have english title" : datas.title.english}
                       </h1>
                       <div className="flex flex-col md:flex-row space-y-1 md:space-x-2 md:place-items-center">
                         <h1 className="font-poppins font-medium text-gray-800 text-xs md:text-sm">
-                          Night Walker: Mayonaka no Tantei
+                          {datas.title.romaji}
                         </h1>
                         <h1 className="font-poppins font-medium text-gray-600 text-xs md:text-xs">
-                          ナイトウォーカー真夜中の探偵
+                          {datas.title.native}
                         </h1>
                       </div>
 
                       <h1 className="pt-1 md:pt-3 font-poppins font-semibold text-sm md:text-lg">
                         Description :
                       </h1>
-                      <p className="font-poppins font-medium text-xs md:text-sm text-gray-600">
-                        A sequel film to <i>Go-toubun no Hanayome ∬</i>.
-                      </p>
+                      <p className="font-poppins font-medium text-xs md:text-sm text-gray-600" dangerouslySetInnerHTML={{__html: datas.description}} />
                       <div className="flex flex-row space-x-10 md:space-x-14">
                         <div>
                           <h1 className="pt-1 md:t-2 font-poppins font-semibold text-sm md:text-lg">
                             Start Date
                           </h1>
                           <p className="font-poppins font-medium text-xs md:text-sm text-gray-600">
-                            20 May 2022
+                          {`${datas.startDate.year} - ${datas.startDate.month < 10 ? `0${datas.startDate.month}` : datas.startDate.month} - ${datas.startDate.day}`}
                           </p>
                         </div>
 
@@ -115,7 +121,7 @@ function Homepage() {
                             End Date
                           </h1>
                           <p className="font-poppins font-medium text-xs md:text-sm text-gray-600">
-                            20 May 2022
+                          {`${datas.endDate.year} - ${datas.endDate.month < 10 ? `0${datas.endDate.month}` : datas.endDate.month} - ${datas.endDate.day}`}
                           </p>
                         </div>
                       </div>
@@ -124,7 +130,7 @@ function Homepage() {
                         Status :
                       </h1>
                       <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        FINISHED
+                        {datas.status}
                       </label>
                     </div>
                   </div>
@@ -133,42 +139,13 @@ function Homepage() {
                   </h1>
                   <div className="relative max-w-[800px]">
                     <div className="flex flex-wrap pt-2 place-items-center space-y-2 space-x-1 left-0">
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Twins
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Female Harem
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Coming of Age
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Primarily Female Cast
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Male Protagonist
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Ensemble Cast
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Love Triangle
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Shounen
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Teacher
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Heterosexual
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Cute Girls Doing Cute Things
-                      </label>
-                      <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
-                        Time Skip
-                      </label>
+                      {
+                        datas.tags.map((val, i) => (
+                          <label key={i} className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
+                            {val.name}
+                          </label>
+                        ))
+                      }
                     </div>
                   </div>
                 </div>

@@ -16,11 +16,27 @@ export const LIST_ANIME = gql`
         title {
           romaji
           native
+          english
         }
         coverImage {
           large
         },
         popularity
+        description
+        status
+        tags {
+          name
+        }
+        startDate {
+          year
+          month
+          day
+        }
+        endDate {
+          year
+          month
+          day
+        }
       }
     }
   }
