@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AnimeContext } from '../../context';
 import { Breadcrumb, HeadingTitle, Modal } from "../../components";
 
@@ -9,6 +10,7 @@ function Collection() {
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [nameCollectionRemove, setNameCollectionRemove] = useState("");
   const [nameCollection, setNameCollection] = useState("");
+  const navigate = useNavigate();
   
   const handleAddCollection = (name) => {
     dispatch({ type: 'ADD_COLLECTION', payload: { name, collectionItem: [] } })
@@ -46,7 +48,7 @@ function Collection() {
         <div className="pt-5 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {
             state.data?.map(val => (
-              <div className="bg-gray-100 px-4 py-4 rounded-xl">
+              <div className="bg-gray-100 px-4 py-4 rounded-xl" onClick={() => navigate(`/collection-detail/${val.name}`)}>
               <img
                 className="rounded-md w-44 h-60 md:w-52 md:h-72"
                 src={val.collectionItem.length > 0 ? val.collectionItem[0].coverImage.large : 'https://fakeimg.pl/350x200/?text=Hello'}
