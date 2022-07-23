@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { DETAIL_ANIME } from '../../graphql/queries'
 import { AnimeContext } from "../../context";
-import { Breadcrumb, Label, HeadingTitle, Image } from "../../components";
+import { Breadcrumb, Label, HeadingTitle, Image, Loader } from "../../components";
 
 const AnimeDetail = () => {
     const [datas] = useState(null);
@@ -17,6 +17,8 @@ const AnimeDetail = () => {
         }
     }) 
 
+    if (loading) return <Loader />
+
     const handleAddCollection = (data) => {
 
         if (state.data.length <= 0) {
@@ -26,8 +28,6 @@ const AnimeDetail = () => {
     
         }
       }
-
-    console.log(data);
 
     return (
         <>

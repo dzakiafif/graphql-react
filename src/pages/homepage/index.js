@@ -63,7 +63,7 @@ function Homepage() {
           {data?.Page.media.map((val, i) => (
             <div
               onClick={() => handleDetail(val)}
-              className="bg-gray-100 px-4 py-4 rounded-xl"
+              className={`bg-gray-100 px-4 py-4 rounded-xl ${i === 0 ? 'mt-5' : ''}`}
               key={i}
             >
               <img

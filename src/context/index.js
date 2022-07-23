@@ -1,8 +1,10 @@
 import { createContext, useReducer, useState, useEffect } from "react";
 import { rootReducer, initialState } from "../reducer";
 
+const initialTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light';
+
 export const AnimeContext = createContext(initialState);
-export const DarkLightContext = createContext();
+export const DarkLightContext = createContext(initialTheme);
 
 export const AnimeProvider = ({ children }) => {
     const [state, dispatch] = useReducer(rootReducer, initialState);
@@ -18,13 +20,18 @@ export const AnimeProvider = ({ children }) => {
 }
 
 export const DarkLightProvider = ({ children }) => {
-    const [darkMode, setDarkMode] = useState(false)
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode)
+    const [theme, setTheme] = useState("light");
+
+    useEffect(() => {
+      localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme("dark")
     }
   
     return (
-      <DarkLightContext.Provider value={{ darkMode, toggleDarkMode }}>
+      <DarkLightContext.Provider value={{ theme, toggleTheme }}>
         {children}
       </DarkLightContext.Provider>
     )

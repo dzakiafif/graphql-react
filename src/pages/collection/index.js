@@ -4,7 +4,7 @@ import { Breadcrumb, HeadingTitle } from "../../components";
 
 function Collection() {
 
-  const { state, dispatch } = useContext(AnimeContext);
+  const { state } = useContext(AnimeContext);
   return (
     <>
       <div className="pt-10 pb-20 px-20 place-items-center space-y-5">
@@ -16,7 +16,8 @@ function Collection() {
               <div className="bg-gray-100 px-4 py-4 rounded-xl">
               <img
                 className="rounded-md w-44 h-60 md:w-52 md:h-72"
-                src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/621.jpg"
+                src={val.collectionItem[0].coverImage.large}
+                alt="img3"
               />
             <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44">
               {val.name.length > 17 ? val.name.slice(0, 17) + "..." : val.name}

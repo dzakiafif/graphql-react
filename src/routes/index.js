@@ -1,10 +1,11 @@
 export const RouteParams = {
-    ID: ':id'
+    ID: ':id',
+    NAME: ':name'
 }
 
 export const ROUTES = {
     ROOT: '/',
     ANIME_DETAIL: `/anime-detail/${RouteParams.ID}`,
     COLLECTION: '/collection',
-    COLLECTION_DETAIL: `/collection-detail/${RouteParams.ID}`
+    COLLECTION_DETAIL: `/collection-detail/${RouteParams.NAME}`
 }
