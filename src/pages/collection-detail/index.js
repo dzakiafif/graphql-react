@@ -22,7 +22,7 @@ const CollectionDetail = () => {
             </h1>
             <div className="pt-3 text-right">
               <button className="px-5 py-2 font-poppins rounded-md font-semibold text-sm bg-red-500 text-white right-0">
-                Release
+                Remove
               </button>
             </div>
           </div>

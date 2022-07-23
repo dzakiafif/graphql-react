@@ -117,7 +117,7 @@ const AnimeDetail = () => {
               <h1 className="pt-1 md:pt-2 font-poppins font-semibold text-sm md:text-lg">
                 Status :
               </h1>
-              <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">data?.Media.status</label>
+              <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">{data?.Media.status}</label>
             </div>
           </div>
           <div className="pt-2">
