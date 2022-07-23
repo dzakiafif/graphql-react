@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { DarkLightContext } from "../../context";
 
 const Navbar= () => {
@@ -13,8 +14,8 @@ const Navbar= () => {
                 <h1 className="text-3xl md:text-2xl font-bold mr-4 text-white font-poppins">AnimeList</h1>
                 <div className="flex flex-row place-items-center space-x-10">
                     <ul className="hidden md:flex space-x-3">
-                        <li className="text-white font-poppins w-36 text-center py-2 bg-blue-600 rounded-lg"><a href="/">Homepage</a></li>
-                        <li className="text-white font-poppins w-36 text-center py-2"><a href="/collection">My Collection</a></li>
+                        <li className="text-white font-poppins w-36 text-center py-2 bg-blue-600 rounded-lg"><Link to="/">Homepage</Link></li>
+                        <li className="text-white font-poppins w-36 text-center py-2"><Link to="/collection">My Collection</Link></li>
                     </ul>
 
                     <div onClick={() => handleToggleTheme()}>

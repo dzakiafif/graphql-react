@@ -11,7 +11,6 @@ export const AnimeProvider = ({ children }) => {
 
     useEffect(() => {
       localStorage.setItem("my-collection", JSON.stringify(state.data));
-      console.log("ini ada perubahan");
     }, [state]);
 
     return (
@@ -20,7 +19,7 @@ export const AnimeProvider = ({ children }) => {
 }
 
 export const DarkLightProvider = ({ children }) => {
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
       localStorage.setItem('theme', theme);
