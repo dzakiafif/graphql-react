@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Modal } from "../../components";
 import { AnimeContext } from "../../context";
 
 const CollectionDetail = () => {
   const { state, dispatch } = useContext(AnimeContext);
   const params = useParams();
+  const navigate = useNavigate();
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [id, setId] = useState(null);
   const data = state.data?.filter((val) => val.name === params.name);
@@ -39,6 +40,7 @@ const CollectionDetail = () => {
                   className="rounded-md w-44 h-60 md:w-52 md:h-72"
                   src={val.coverImage.large}
                   alt="img3"
+                  onClick={() => navigate(`/anime-detail/${val.id}`)}
                 />
                 <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44">
                   {val.title.romaji.length > 17

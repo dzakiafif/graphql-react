@@ -34,49 +34,45 @@ function Collection() {
 
   return (
     <>
-      <div className="pt-10 pb-20 px-20 place-items-center space-y-5">
-        <Breadcrumb otherPage="My Collection" />
-        <div className="flex flex-row justify-between">
-          <HeadingTitle title="My Anime Collection" />
-          <button
-            className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
-            type="button"
-            onClick={() => setShowModalAdd(true)}
-          >
-            Add Collection
-          </button>
-        </div>
-        <div className="pt-5 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
-          {state.data?.map((val) => (
-            <div className="bg-gray-100 px-4 py-4 rounded-xl">
-              <img
-                className="rounded-md w-44 h-60 md:w-52 md:h-72"
-                src={
-                  val.collectionItem.length > 0
-                    ? val.collectionItem[0].coverImage.large
-                    : "https://fakeimg.pl/350x200/?text=No Image"
-                }
-                alt="img3"
-              />
-              <h1
-                className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44"
-                onClick={() => navigate(`/collection-detail/${val.name}`)}
+      <Breadcrumb otherPage="My Collection" />
+      <div className="flex flex-row justify-between">
+        <HeadingTitle title="My Anime Collection" />
+        <button
+          className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
+          type="button"
+          onClick={() => setShowModalAdd(true)}
+        >
+          Add Collection
+        </button>
+      </div>
+      <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
+        {state.data?.map((val, i) => (
+          <div className={`bg-gray-100 px-4 py-4 rounded-xl ${i === 0 ? 'mt-5' : ''}`} key={i}>
+            <img
+              className="rounded-md w-44 h-60 md:w-52 md:h-72"
+              src={
+                val.collectionItem.length > 0
+                  ? val.collectionItem[0].coverImage.large
+                  : "https://fakeimg.pl/350x200/?text=No Image"
+              }
+              alt="img3"
+              onClick={() => navigate(`/collection-detail/${val.name}`)}
+            />
+            <h1
+              className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44"
+            >
+              {val.name.length > 17 ? val.name.slice(0, 17) + "..." : val.name}
+            </h1>
+            <div className="pt-3 text-right">
+              <button
+                className="px-5 py-2 font-poppins rounded-md font-semibold text-sm bg-red-500 text-white right-0"
+                onClick={() => handleClickRemove(val.name)}
               >
-                {val.name.length > 17
-                  ? val.name.slice(0, 17) + "..."
-                  : val.name}
-              </h1>
-              <div className="pt-3 text-right">
-                <button
-                  className="px-5 py-2 font-poppins rounded-md font-semibold text-sm bg-red-500 text-white right-0"
-                  onClick={() => handleClickRemove(val.name)}
-                >
-                  Remove
-                </button>
-              </div>
+                Remove
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       {showModalAdd && (
@@ -108,7 +104,10 @@ function Collection() {
       )}
 
       {showModalRemove && (
-        <Modal modalTitle="Remove Collection" onClose={() => handleCloseModal()}>
+        <Modal
+          modalTitle="Remove Collection"
+          onClose={() => handleCloseModal()}
+        >
           <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b space-x-2">
             <button
               className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"

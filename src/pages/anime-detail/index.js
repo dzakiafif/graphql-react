@@ -17,6 +17,8 @@ const AnimeDetail = () => {
   const params = useParams();
   const { state, dispatch } = useContext(AnimeContext);
   const [names, setNames] = useState("");
+  const [checkedBox, setCheckedBox] = useState({});
+  const [showMessage, setShowMessage] = useState(false);
   const { loading, error, data } = useQuery(DETAIL_ANIME, {
     variables: {
       id: params.id,
@@ -36,7 +38,22 @@ const AnimeDetail = () => {
         payload: { name: names, collectionItem: data },
       });
     } else {
+      state.data?.forEach((val, i) => {
+        if (checkedBox[val.name] === true) {
+          dispatch({
+            type: "ADD_COLLECTION_ITEM",
+            payload: { name: val.name, collectionItem: data }
+          });
+        }
+      })
     }
+  };
+
+  const handleChangeCheckbox = (e) => {
+    setCheckedBox({
+      ...checkedBox,
+      [e.target.name]: e.target.checked,
+    });
   };
 
   return (
@@ -117,7 +134,9 @@ const AnimeDetail = () => {
               <h1 className="pt-1 md:pt-2 font-poppins font-semibold text-sm md:text-lg">
                 Status :
               </h1>
-              <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">{data?.Media.status}</label>
+              <label className="bg-green-600 w-max px-3 py-1 rounded-2xl font-poppins font-semibold text-xs md:text-sm text-white text-center">
+                {data?.Media.status}
+              </label>
             </div>
           </div>
           <div className="pt-2">
@@ -127,7 +146,7 @@ const AnimeDetail = () => {
             <div className="relative max-w-[800px]">
               <div className="flex flex-wrap pt-2 place-items-center space-y-2 space-x-1 left-0">
                 {data?.Media.tags.map((val, i) => (
-                  <Label labelKey={i} labelName={val.name} />
+                  <Label key={i} labelKey={i} labelName={val.name} />
                 ))}
               </div>
             </div>
@@ -137,9 +156,11 @@ const AnimeDetail = () => {
 
       {showModalAdd ? (
         <>
-          <Modal modalTitle="Add To Collection" onClose={() => setShowModalAdd(false)}
+          <Modal
+            modalTitle="Add To Collection"
+            onClose={() => setShowModalAdd(false)}
           >
-            {state.data.length <= 0 && (
+            {state.data.length <= 0 ? (
               <>
                 <h1 className="font-poppins font-medium text-sm md:text-base">
                   Type a name and add to my collection
@@ -151,6 +172,31 @@ const AnimeDetail = () => {
                   onChange={(e) => setNames(e.target.value)}
                   value={names}
                 />
+              </>
+            ) : (
+              <>
+                {state.data?.map((val, i) => (
+                  <label key={i}>
+                    {val.name}
+                    <label>
+                      <input
+                        type="checkbox"
+                        name={val.name}
+                        checked={
+                          checkedBox[val.name] === undefined
+                            ? false
+                            : checkedBox[val.name]
+                        }
+                        value={
+                          checkedBox[val.name] === undefined
+                            ? ""
+                            : checkedBox[val.name]
+                        }
+                        onChange={(e) => handleChangeCheckbox(e)}
+                      />
+                    </label>
+                  </label>
+                ))}
               </>
             )}
             <p className="pt-2 text-red-500 font-poppins text-xs md:text-sm font-normal">
