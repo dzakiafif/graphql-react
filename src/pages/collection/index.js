@@ -59,7 +59,7 @@ function Collection() {
               src={
                 val.collectionItem.length > 0
                   ? val.collectionItem[0].coverImage.large
-                  : "https://fakeimg.pl/350x200/?text=No Image"
+                  : "https://fakeimg.pl/200x350/?text=No Image"
               }
               alt="img3"
               onClick={() => navigate(`/collection-detail/${val.name}`)}
