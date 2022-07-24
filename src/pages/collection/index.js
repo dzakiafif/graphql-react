@@ -73,6 +73,7 @@ function Collection() {
           </button>
         </div>
       </div>
+      {state.data?.length === 0 ? <h1 className="pt-48 text-center font-poppins font-bold text-lg">You have no anime collection yet, add anime to collection first !</h1> : 
       <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
         {state.data?.map((val, i) => (
           <div
@@ -104,7 +105,7 @@ function Collection() {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
 
       {showModalAdd && (
         <Modal

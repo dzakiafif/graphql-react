@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { DETAIL_ANIME } from "../../graphql/queries";
 import { AnimeContext } from "../../context";
@@ -16,6 +16,7 @@ import PageLoadError from "../errorload";
 
 const AnimeDetail = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const params = useParams();
   const { state, dispatch } = useContext(AnimeContext);
   const [names, setNames] = useState("");
@@ -27,6 +28,7 @@ const AnimeDetail = () => {
       id: params.id,
     },
   });
+  const navigate = useNavigate();
 
   if (loading) return <div className="grid h-screen place-items-center"><Loader /></div>;
   if (error) return <Template><PageLoadError/></Template>
@@ -37,7 +39,7 @@ const AnimeDetail = () => {
         setShowErrorMessage("Collection Name is Required");
         setShowError(true);
       } else if (/[^a-zA-Z0-9/]/.test(names)) {
-        setShowErrorMessage("Collection name must not have a special char");
+        setShowErrorMessage("Collection Name must not have a special char");
         setShowError(true);
       } else if (state.data.filter((val) => val.name === names).length > 0) {
         setShowErrorMessage("Collection Name is already exist");
@@ -52,6 +54,7 @@ const AnimeDetail = () => {
           payload: { name: names, collectionItem: data },
         });
         setShowModalAdd(false);
+        setShowModalSuccess(true);
       }
     } else {
       if (Object.keys(checkedBox).length === 0 ||
@@ -68,6 +71,7 @@ const AnimeDetail = () => {
           }
         });
         setShowModalAdd(false);
+        setShowModalSuccess(true);
       }
     }
   };
@@ -86,6 +90,11 @@ const AnimeDetail = () => {
     setCheckedBox({});
   }
 
+  const handleCloseModalSuccess = () => {
+    setShowModalSuccess(false);
+    navigate("/")
+  }
+
   return (
     <>
       <div className="pt-10 pb-20 px-20 place-items-center">
@@ -93,7 +102,7 @@ const AnimeDetail = () => {
         <HeadingTitle
           title={
             data?.Media.title.english === null
-              ? " This anime doesnt have english title"
+              ? "This anime doesnt have english title"
               : data?.Media.title.english
           }
         />
@@ -184,6 +193,22 @@ const AnimeDetail = () => {
         </div>
       </div>
 
+      {showModalSuccess ? (
+        <>
+          <Modal
+            modalTitle="You have added anime to collection successfully"
+            onClose={() => handleCloseModalSuccess()}
+          >
+             <button
+                className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-500 focus:outline-none ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => handleCloseModalSuccess()}>
+                OK
+              </button>
+          </Modal>
+        </>
+      ) : null }
+      
       {showModalAdd ? (
         <>
           <Modal
@@ -212,9 +237,9 @@ const AnimeDetail = () => {
               <>
                 {state.data?.map((val, i) => (
                   <label key={i}>
-                    {val.name}
-                    <label>
+                    <label className="font-poppins text-base">
                       <input
+                        className="mr-2 place-items-center"
                         type="checkbox"
                         name={val.name}
                         checked={
@@ -230,6 +255,7 @@ const AnimeDetail = () => {
                         onChange={(e) => handleChangeCheckbox(e)}
                       />
                     </label>
+                    {val.name}
                   </label>
                 ))}
                 {showError && (
