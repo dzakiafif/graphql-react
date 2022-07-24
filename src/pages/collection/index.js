@@ -38,6 +38,7 @@ function Collection() {
 
   return (
     <>
+      <div className="pt-10 pb-15 px-20 place-items-center space-y-5">
       <Breadcrumb otherPage="My Collection" />
       <div className="flex flex-row justify-between">
         <HeadingTitle title="My Anime Collection" />
@@ -48,6 +49,7 @@ function Collection() {
         >
           Add Collection
         </button>
+      </div>
       </div>
       <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
         {state.data?.map((val, i) => (
