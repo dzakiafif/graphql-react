@@ -3,6 +3,8 @@ import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { LIST_ANIME } from "../../graphql/queries";
 import { Loader } from "../../components";
+import Template from "../template";
+import PageLoadError from "../errorload";
 
 function Homepage() {
   const { loading, error, data, fetchMore } = useQuery(LIST_ANIME, {
@@ -11,6 +13,7 @@ function Homepage() {
   const navigate = useNavigate();
 
   if (loading) return <div className="grid h-screen place-items-center"><Loader /></div>;
+  if (error) return <Template><PageLoadError/></Template>
 
   const handleLoadMore = () => {
     data?.Page.pageInfo.hasNextPage &&
