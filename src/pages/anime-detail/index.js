@@ -11,6 +11,8 @@ import {
   Loader,
   Modal,
 } from "../../components";
+import Template from "../template";
+import PageLoadError from "../errorload";
 
 const AnimeDetail = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
@@ -27,6 +29,7 @@ const AnimeDetail = () => {
   });
 
   if (loading) return <div className="grid h-screen place-items-center"><Loader /></div>;
+  if (error) return <Template><PageLoadError/></Template>
 
   const handleAddCollection = (data) => {
     if (state.data.length <= 0) {
