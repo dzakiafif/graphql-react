@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { DETAIL_ANIME } from "../../graphql/queries";
 import { AnimeContext } from "../../context";
@@ -18,7 +18,6 @@ const AnimeDetail = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const params = useParams();
-  const navigate = useNavigate();
   const { state, dispatch } = useContext(AnimeContext);
   const [names, setNames] = useState("");
   const [checkedBox, setCheckedBox] = useState({});
@@ -92,7 +91,6 @@ const AnimeDetail = () => {
 
   const handleCloseModalSuccess = () => {
     setShowModalSuccess(false);
-    navigate("/")
   }
 
   return (
