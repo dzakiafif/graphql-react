@@ -47,6 +47,8 @@ const AnimeDetail = () => {
         }
       })
     }
+
+    setShowModalAdd(false);
   };
 
   const handleChangeCheckbox = (e) => {

@@ -12,7 +12,7 @@ const Navbar= () => {
     return(
         <div className={theme === "dark" ? "w-screen z-10 bg-gray-800 top-0" : "w-screen z-10 bg-blue-800 top-0"}>
             <div className="flex justify-between place-items-center py-1 px-4 md:flex md:justify-between md:px-6 md:py-4 md:place-items-center">
-                <h1 className="text-3xl md:text-2xl font-bold mr-4 text-white font-poppins">AnimeList</h1>
+                <h1 className="text-3xl md:text-2xl font-bold mr-4 text-white font-poppins"><Link to={'/'}>AnimeList</Link></h1>
                 <div className="flex flex-row place-items-center space-x-10">
                     <ul className="hidden md:flex space-x-3">
                         <li className={`text-white font-poppins w-36 text-center py-2 ${location.pathname === '/' ? 'bg-blue-600 rounded-lg' : ''}`}><Link to="/">Homepage</Link></li>

@@ -17,7 +17,7 @@ function Collection() {
     setNameCollection("");
   };
 
-  const handleCloseModal = () => {
+  const handleCloseAddModal = () => {
     setShowModalAdd(false);
     setNameCollection("");
   };
@@ -31,6 +31,10 @@ function Collection() {
     dispatch({ type: "REMOVE_COLLECTION", payload: { name } });
     setShowModalRemove(false);
   };
+
+  const handleCloseRemoveModal = () => {
+    setShowModalRemove(false);
+  }
 
   return (
     <>
@@ -76,7 +80,7 @@ function Collection() {
       </div>
 
       {showModalAdd && (
-        <Modal modalTitle="Add Collection" onClose={() => handleCloseModal()}>
+        <Modal modalTitle="Add Collection" onClose={() => handleCloseAddModal()}>
           <input
             className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
             type="text"
@@ -95,7 +99,7 @@ function Collection() {
             <button
               className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-red-500 focus:outline-none ease-linear transition-all duration-150"
               type="button"
-              onClick={() => handleCloseModal()}
+              onClick={() => handleCloseAddModal()}
             >
               Close
             </button>
@@ -106,7 +110,7 @@ function Collection() {
       {showModalRemove && (
         <Modal
           modalTitle="Remove Collection"
-          onClose={() => handleCloseModal()}
+          onClose={() => handleCloseRemoveModal()}
         >
           <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b space-x-2">
             <button
@@ -119,7 +123,7 @@ function Collection() {
             <button
               className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-red-500 focus:outline-none ease-linear transition-all duration-150"
               type="button"
-              onClick={() => handleCloseModal()}
+              onClick={() => handleCloseRemoveModal()}
             >
               Close
             </button>
