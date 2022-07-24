@@ -15,7 +15,7 @@ const initialState = {
           return { ...state, data: checkCollection };
       case 'REMOVE_COLLECTION_ITEM':
           const checkCollectionRemoveItem = state.data.filter(val => val.name === action.payload.name);
-          checkCollectionRemoveItem.length > 0 && checkCollectionRemoveItem.map(val => val.collectionItem = val.collectionItem.filter(val => val.name !== action.payload.collectionItem.name));
+          checkCollectionRemoveItem.length > 0 && checkCollectionRemoveItem.map(val => val.collectionItem = val.collectionItem.filter(val => val.id !== action.payload.collectionItem.id));
           return { ...state, data: checkCollectionRemoveItem };
       default:
         return state;

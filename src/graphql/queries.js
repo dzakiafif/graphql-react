@@ -45,6 +45,7 @@ export const LIST_ANIME = gql`
 export const DETAIL_ANIME = gql`
   query getListAnimeDetail($id: Int) {
     Media(id: $id) {
+      id
       title {
         romaji
         native
