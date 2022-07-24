@@ -137,9 +137,7 @@ const AnimeDetail = () => {
 
       {showModalAdd ? (
         <>
-          <Modal
-            modalImage={data?.Media.coverImage.large}
-            modalTitle={data?.Media.title.romaji}
+          <Modal modalTitle="Add To Collection"
           >
             {state.data.length <= 0 && (
               <>

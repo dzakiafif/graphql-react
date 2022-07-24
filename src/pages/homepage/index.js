@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { LIST_ANIME } from "../../graphql/queries";
@@ -10,14 +10,14 @@ function Homepage() {
   const [showModalDetail, setShowModalDetail] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [datas, setDatas] = useState(null);
-  const {state, dispatch} = useContext(AnimeContext);
+  const { state, dispatch } = useContext(AnimeContext);
   const [names, setNames] = useState("");
   const { loading, error, data, fetchMore } = useQuery(LIST_ANIME, {
     variables: { page: 1, perPage: 10 },
   });
   const navigate = useNavigate();
 
-  if (loading) return <Loader />
+  if (loading) return <Loader />;
 
   const handleLoadMore = () => {
     data?.Page.pageInfo.hasNextPage &&
@@ -43,14 +43,18 @@ function Homepage() {
   };
 
   const handleAddCollection = (data) => {
-
     if (state.data.length <= 0) {
-      dispatch({ type: 'ADD_COLLECTION', payload: { name: names, collectionItem: [] } })
-      dispatch({ type: 'ADD_COLLECTION_ITEM', payload: { name: names, collectionItem: data } })
+      dispatch({
+        type: "ADD_COLLECTION",
+        payload: { name: names, collectionItem: [] },
+      });
+      dispatch({
+        type: "ADD_COLLECTION_ITEM",
+        payload: { name: names, collectionItem: data },
+      });
     } else {
-
     }
-  }
+  };
 
   return (
     <>
@@ -58,12 +62,15 @@ function Homepage() {
         pageStart={0}
         loadMore={handleLoadMore}
         hasMore={data?.Page.pageInfo.hasNextPage}
-        loader={<Loader key={0} />}>
+        loader={<Loader key={0} />}
+      >
         <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {data?.Page.media.map((val, i) => (
             <div
               onClick={() => handleDetail(val)}
-              className={`bg-gray-100 px-4 py-4 rounded-xl ${i === 0 ? 'mt-5' : ''}`}
+              className={`bg-gray-100 px-4 py-4 rounded-xl ${
+                i === 0 ? "mt-5" : ""
+              }`}
               key={i}
             >
               <img
@@ -220,15 +227,15 @@ function Homepage() {
                       alt="img2"
                     />
                     <h1 className="font-poppins font-medium text-sm md:text-base">
-                          Type a name and add to my collection
-                        </h1>
-                        <input
-                          className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
-                          type="text"
-                          placeholder="Anime Nickname..."
-                          onChange={(e) => setNames(e.target.value)}
-                          value={names}
-                        />
+                      Type a name and add to my collection
+                    </h1>
+                    <input
+                      className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
+                      type="text"
+                      placeholder="Anime Nickname..."
+                      onChange={(e) => setNames(e.target.value)}
+                      value={names}
+                    />
                     <p className="pt-2 text-red-500 font-poppins text-xs md:text-sm font-normal">
                       ini pesan error
                     </p>
