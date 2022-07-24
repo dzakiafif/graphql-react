@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Modal } from "../../components";
+import { Breadcrumb, HeadingTitle, Modal } from "../../components";
 import { AnimeContext } from "../../context";
 
 const CollectionDetail = () => {
@@ -27,8 +27,13 @@ const CollectionDetail = () => {
 
   return (
     <>
-      <div className="pt-10 pb-20 px-20 place-items-center space-y-5">
-        <div className="pt-5 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
+    <div className="pt-10 pb-15 px-20 place-items-center space-y-5">
+        <Breadcrumb otherPage="My Collection" />
+        <div className="flex flex-row justify-between">
+          <HeadingTitle title="My Anime Collection Detail" />
+        </div>
+      </div>
+      <div className="pt-5 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {data.length > 0 &&
             data[0].collectionItem.map((val, i) => (
               <div
@@ -58,7 +63,6 @@ const CollectionDetail = () => {
               </div>
             ))}
         </div>
-      </div>
       {
         showModalRemove && (
           <Modal modalTitle="Remove Anime From Collection" onClose={() => handleCloseModal()}>

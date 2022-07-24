@@ -34,26 +34,31 @@ function Collection() {
 
   const handleCloseRemoveModal = () => {
     setShowModalRemove(false);
-  }
+  };
 
   return (
     <>
       <div className="pt-10 pb-15 px-20 place-items-center space-y-5">
-      <Breadcrumb otherPage="My Collection" />
-      <div className="flex flex-row justify-between">
-        <HeadingTitle title="My Anime Collection" />
-        <button
-          className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
-          type="button"
-          onClick={() => setShowModalAdd(true)}
-        >
-          Add Collection
-        </button>
-      </div>
+        <Breadcrumb otherPage="My Collection" />
+        <div className="flex flex-row justify-between">
+          <HeadingTitle title="My Anime Collection" />
+          <button
+            className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => setShowModalAdd(true)}
+          >
+            Add Collection
+          </button>
+        </div>
       </div>
       <div className="pt-10 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
         {state.data?.map((val, i) => (
-          <div className={`bg-gray-100 px-4 py-4 rounded-xl ${i === 0 ? 'mt-5' : ''}`} key={i}>
+          <div
+            className={`bg-gray-100 px-4 py-4 rounded-xl ${
+              i === 0 ? "mt-5" : ""
+            }`}
+            key={i}
+          >
             <img
               className="rounded-md w-44 h-60 md:w-52 md:h-72"
               src={
@@ -64,9 +69,7 @@ function Collection() {
               alt="img3"
               onClick={() => navigate(`/collection-detail/${val.name}`)}
             />
-            <h1
-              className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44"
-            >
+            <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44">
               {val.name.length > 17 ? val.name.slice(0, 17) + "..." : val.name}
             </h1>
             <div className="pt-3 text-right">
@@ -82,7 +85,10 @@ function Collection() {
       </div>
 
       {showModalAdd && (
-        <Modal modalTitle="Add Collection" onClose={() => handleCloseAddModal()}>
+        <Modal
+          modalTitle="Add Collection"
+          onClose={() => handleCloseAddModal()}
+        >
           <input
             className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
             type="text"
