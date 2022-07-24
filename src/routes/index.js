@@ -9,4 +9,5 @@ export const ROUTES = {
     COLLECTION: '/collection',
     COLLECTION_DETAIL: `/collection-detail/${RouteParams.NAME}`,
     PAGE_NOT_FOUND: '/page-not-found',
+    PAGE_LOAD_ERROR: '/page-load-error',
 }
