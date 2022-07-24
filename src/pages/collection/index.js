@@ -48,13 +48,13 @@ function Collection() {
         <div className="pt-5 pb-20 px-20 grid grid-cols-1 lg:grid-cols-4 place-items-center space-y-5">
           {
             state.data?.map(val => (
-              <div className="bg-gray-100 px-4 py-4 rounded-xl" onClick={() => navigate(`/collection-detail/${val.name}`)}>
+              <div className="bg-gray-100 px-4 py-4 rounded-xl">
               <img
                 className="rounded-md w-44 h-60 md:w-52 md:h-72"
                 src={val.collectionItem.length > 0 ? val.collectionItem[0].coverImage.large : 'https://fakeimg.pl/350x200/?text=Hello'}
                 alt="img3"
               />
-            <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44">
+            <h1 className="pt-2 text-lg font-poppins font-semibold text-gray-800 w-44" onClick={() => navigate(`/collection-detail/${val.name}`)}>
               {val.name.length > 17 ? val.name.slice(0, 17) + "..." : val.name}
             </h1>
             <div className="pt-3 text-right">

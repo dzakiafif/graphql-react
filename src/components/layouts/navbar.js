@@ -1,9 +1,10 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { DarkLightContext } from "../../context";
 
 const Navbar= () => {
-    const { theme, toggleTheme} = useContext(DarkLightContext)
+    const { theme, toggleTheme} = useContext(DarkLightContext);
+    const location = useLocation();
     const handleToggleTheme = () => { 
         toggleTheme()
     }
@@ -14,8 +15,8 @@ const Navbar= () => {
                 <h1 className="text-3xl md:text-2xl font-bold mr-4 text-white font-poppins">AnimeList</h1>
                 <div className="flex flex-row place-items-center space-x-10">
                     <ul className="hidden md:flex space-x-3">
-                        <li className="text-white font-poppins w-36 text-center py-2 bg-blue-600 rounded-lg"><Link to="/">Homepage</Link></li>
-                        <li className="text-white font-poppins w-36 text-center py-2"><Link to="/collection">My Collection</Link></li>
+                        <li className={`text-white font-poppins w-36 text-center py-2 ${location.pathname === '/' ? 'bg-blue-600 rounded-lg' : ''}`}><Link to="/">Homepage</Link></li>
+                        <li className={`text-white font-poppins w-36 text-center py-2 ${location.pathname === '/collection' ? 'bg-blue-600 rounded-lg' : ''}`}><Link to="/collection">My Collection</Link></li>
                     </ul>
 
                     <div onClick={() => handleToggleTheme()}>
