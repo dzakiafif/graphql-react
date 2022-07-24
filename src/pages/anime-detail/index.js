@@ -18,6 +18,7 @@ const AnimeDetail = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const params = useParams();
+  const navigate = useNavigate();
   const { state, dispatch } = useContext(AnimeContext);
   const [names, setNames] = useState("");
   const [checkedBox, setCheckedBox] = useState({});
@@ -28,7 +29,6 @@ const AnimeDetail = () => {
       id: params.id,
     },
   });
-  const navigate = useNavigate();
 
   if (loading) return <div className="grid h-screen place-items-center"><Loader /></div>;
   if (error) return <Template><PageLoadError/></Template>
