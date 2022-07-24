@@ -25,7 +25,7 @@ const AnimeDetail = () => {
     },
   });
 
-  if (loading) return <Loader />;
+  if (loading) return <div className="grid h-screen place-items-center"><Loader /></div>;
 
   const handleAddCollection = (data) => {
     if (state.data.length <= 0) {
