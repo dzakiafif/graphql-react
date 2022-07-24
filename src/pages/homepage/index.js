@@ -10,7 +10,7 @@ function Homepage() {
   });
   const navigate = useNavigate();
 
-  if (loading) return <Loader />;
+  if (loading) return <div className="grid h-screen place-items-center"><Loader /></div>;
 
   const handleLoadMore = () => {
     data?.Page.pageInfo.hasNextPage &&
