@@ -137,7 +137,7 @@ const AnimeDetail = () => {
 
       {showModalAdd ? (
         <>
-          <Modal modalTitle="Add To Collection"
+          <Modal modalTitle="Add To Collection" onClose={() => setShowModalAdd(false)}
           >
             {state.data.length <= 0 && (
               <>

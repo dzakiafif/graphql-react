@@ -59,7 +59,7 @@ const CollectionDetail = () => {
       </div>
       {
         showModalRemove && (
-          <Modal modalTitle="Remove Anime From Collection">
+          <Modal modalTitle="Remove Anime From Collection" onClose={() => handleCloseModal()}>
             <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b space-x-2">
               <button
                 className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"

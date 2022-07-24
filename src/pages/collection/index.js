@@ -80,7 +80,7 @@ function Collection() {
       </div>
 
       {showModalAdd && (
-        <Modal modalTitle="Add Collection">
+        <Modal modalTitle="Add Collection" onClose={() => handleCloseModal()}>
           <input
             className="w-80 px-4 py-2 border-2 rounded-lg border-gray-400 font-poppins outline-none focus:border-blue-400 text-xs md:text-base"
             type="text"
@@ -108,7 +108,7 @@ function Collection() {
       )}
 
       {showModalRemove && (
-        <Modal modalTitle="Remove Collection">
+        <Modal modalTitle="Remove Collection" onClose={() => handleCloseModal()}>
           <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b space-x-2">
             <button
               className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"

@@ -1,4 +1,17 @@
-function Modal({ modalTitle, children }) {
+import { useEffect } from "react";
+
+function Modal({ modalTitle, children, onClose }) {
+  
+  const closeOnKeyDown = (e) => {
+    if (e.charCode || e.keyCode === 27) {
+      onClose();
+    }
+  }
+
+  useEffect(() => {
+    document.body.addEventListener('keydown', closeOnKeyDown);
+    return () => document.body.removeEventListener('keydown', closeOnKeyDown);
+  }, []);
   return (
     <>
       <div className="md:pt-5 justify-center place-items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
