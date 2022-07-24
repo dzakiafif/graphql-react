@@ -33,8 +33,8 @@ const AnimeDetail = () => {
       if (names === "") {
         setShowErrorMessage("Collection Name is Required");
         setShowError(true);
-      } else if (!/^[a-zA-Z0-9!@#$%^&*)(+=._-]*$/.test(names)) {
-        setShowErrorMessage("Collection name doesnt have a special char");
+      } else if (/[^a-zA-Z0-9/]/.test(names)) {
+        setShowErrorMessage("Collection name must not have a special char");
         setShowError(true);
       } else if (state.data.filter((val) => val.name === names).length > 0) {
         setShowErrorMessage("Collection Name is already exist");

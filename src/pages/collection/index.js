@@ -14,12 +14,11 @@ function Collection() {
   const navigate = useNavigate();
 
   const handleAddCollection = (name) => {
-    console.log(nameCollection.match(/^[a-zA-Z0-9!@#$%^&*)(+=._-]*$/));
     if (nameCollection === "") {
       setErrorMessage("Collection Name is required");
       setShowError(true);
-    } else if (!nameCollection.match(/^[a-zA-Z0-9!@#$%^&*)(+=._-]*$/)) {
-      setErrorMessage("Collection name doesnt have a special char");
+    } else if (/[^a-zA-Z0-9/]/.test(nameCollection)) {
+      setErrorMessage("Collection name must not have a special char");
       setShowError(true);
     } else if (
       state.data.filter((val) => val.name === nameCollection).length > 0
