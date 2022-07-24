@@ -111,9 +111,9 @@ const AnimeDetail = () => {
                 <button
                   className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setShowModalAdd(true)}
+                  onClick={() => state.data?.map(val => val.collectionItem).flat().some(value => value.id === Number(params.id)) ? false : setShowModalAdd(true)}
                 >
-                  Add to Collection
+                  {state.data?.map(val => val.collectionItem).flat().some(value => value.id === Number(params.id)) ? 'Added to Collection' : "Add to Collection"}
                 </button>
               </div>
 
