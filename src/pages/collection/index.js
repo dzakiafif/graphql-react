@@ -8,6 +8,7 @@ function Collection() {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [nameCollectionRemove, setNameCollectionRemove] = useState("");
   const [nameCollection, setNameCollection] = useState("");
@@ -34,6 +35,7 @@ function Collection() {
       setNameCollection("");
       setErrorMessage("");
       setShowError(false);
+      setShowModalSuccess(true);
     }
   };
 
@@ -57,6 +59,10 @@ function Collection() {
   const handleCloseRemoveModal = () => {
     setShowModalRemove(false);
   };
+
+  const handleCloseModalSuccess = () => {
+    setShowModalSuccess(false);
+  }
 
   return (
     <>
@@ -165,6 +171,22 @@ function Collection() {
             </button>
           </div>
         </Modal>
+      )}
+
+{showModalSuccess && (
+        <>
+          <Modal
+            modalTitle="You have added new collection successfully"
+            onClose={() => handleCloseModalSuccess()}
+          >
+             <button
+                className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-500 focus:outline-none ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => handleCloseModalSuccess()}>
+                OK
+              </button>
+          </Modal>
+        </>
       )}
     </>
   );

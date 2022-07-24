@@ -191,7 +191,7 @@ const AnimeDetail = () => {
         </div>
       </div>
 
-      {showModalSuccess ? (
+      {showModalSuccess && (
         <>
           <Modal
             modalTitle="You have added anime to collection successfully"
@@ -205,9 +205,9 @@ const AnimeDetail = () => {
               </button>
           </Modal>
         </>
-      ) : null }
+      )}
       
-      {showModalAdd ? (
+      {showModalAdd && (
         <>
           <Modal
             modalTitle="Add To Collection"
@@ -281,7 +281,7 @@ const AnimeDetail = () => {
             </div>
           </Modal>
         </>
-      ) : null}
+      )}
     </>
   );
 };
