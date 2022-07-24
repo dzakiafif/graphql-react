@@ -18,7 +18,8 @@ const AnimeDetail = () => {
   const { state, dispatch } = useContext(AnimeContext);
   const [names, setNames] = useState("");
   const [checkedBox, setCheckedBox] = useState({});
-  const [showMessage, setShowMessage] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState("");
   const { loading, error, data } = useQuery(DETAIL_ANIME, {
     variables: {
       id: params.id,
@@ -29,26 +30,43 @@ const AnimeDetail = () => {
 
   const handleAddCollection = (data) => {
     if (state.data.length <= 0) {
-      dispatch({
-        type: "ADD_COLLECTION",
-        payload: { name: names, collectionItem: [] },
-      });
-      dispatch({
-        type: "ADD_COLLECTION_ITEM",
-        payload: { name: names, collectionItem: data },
-      });
+      if (names === "") {
+        setShowErrorMessage("Collection Name is Required");
+        setShowError(true);
+      } else if (!/^[a-zA-Z0-9!@#$%^&*)(+=._-]*$/.test(names)) {
+        setShowErrorMessage("Collection name doesnt have a special char");
+        setShowError(true);
+      } else if (state.data.filter((val) => val.name === names).length > 0) {
+        setShowErrorMessage("Collection Name is already exist");
+        setShowError(true);
+      } else {
+        dispatch({
+          type: "ADD_COLLECTION",
+          payload: { name: names, collectionItem: [] },
+        });
+        dispatch({
+          type: "ADD_COLLECTION_ITEM",
+          payload: { name: names, collectionItem: data },
+        });
+        setShowModalAdd(false);
+      }
     } else {
-      state.data?.forEach((val, i) => {
-        if (checkedBox[val.name] === true) {
-          dispatch({
-            type: "ADD_COLLECTION_ITEM",
-            payload: { name: val.name, collectionItem: data }
-          });
-        }
-      })
+      if (Object.keys(checkedBox).length === 0 ||
+      Object.values(checkedBox).every((val) => val === false)) {
+        setShowErrorMessage("Collection Name is Required");
+        setShowError(true);
+      } else {
+        state.data?.forEach((val, i) => {
+          if (checkedBox[val.name] === true) {
+            dispatch({
+              type: "ADD_COLLECTION_ITEM",
+              payload: { name: val.name, collectionItem: data },
+            });
+          }
+        });
+        setShowModalAdd(false);
+      }
     }
-
-    setShowModalAdd(false);
   };
 
   const handleChangeCheckbox = (e) => {
@@ -57,6 +75,13 @@ const AnimeDetail = () => {
       [e.target.name]: e.target.checked,
     });
   };
+
+  const handleCloseModal = () => {
+    setShowModalAdd(false);
+    setShowErrorMessage("");
+    setShowError(false);
+    setCheckedBox({});
+  }
 
   return (
     <>
@@ -160,7 +185,7 @@ const AnimeDetail = () => {
         <>
           <Modal
             modalTitle="Add To Collection"
-            onClose={() => setShowModalAdd(false)}
+            onClose={() => handleCloseModal()}
           >
             {state.data.length <= 0 ? (
               <>
@@ -174,6 +199,11 @@ const AnimeDetail = () => {
                   onChange={(e) => setNames(e.target.value)}
                   value={names}
                 />
+                {showError && (
+                  <p className="text-red-500 font-poppins text-xs md:text-sm font-normal">
+                    {showErrorMessage}
+                  </p>
+                )}
               </>
             ) : (
               <>
@@ -199,11 +229,13 @@ const AnimeDetail = () => {
                     </label>
                   </label>
                 ))}
+                {showError && (
+                  <p className="text-red-500 font-poppins text-xs md:text-sm font-normal">
+                    {showErrorMessage}
+                  </p>
+                )}
               </>
             )}
-            <p className="pt-2 text-red-500 font-poppins text-xs md:text-sm font-normal">
-              ini pesan error
-            </p>
             <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b space-x-2">
               <button
                 className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
@@ -215,7 +247,7 @@ const AnimeDetail = () => {
               <button
                 className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-red-500 focus:outline-none ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => setShowModalAdd(false)}
+                onClick={() => handleCloseModal()}
               >
                 Close
               </button>

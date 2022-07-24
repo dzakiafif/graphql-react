@@ -7,19 +7,42 @@ function Collection() {
   const { state, dispatch } = useContext(AnimeContext);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [nameCollectionRemove, setNameCollectionRemove] = useState("");
   const [nameCollection, setNameCollection] = useState("");
   const navigate = useNavigate();
 
   const handleAddCollection = (name) => {
-    dispatch({ type: "ADD_COLLECTION", payload: { name, collectionItem: [] } });
-    setShowModalAdd(false);
-    setNameCollection("");
+    console.log(nameCollection.match(/^[a-zA-Z0-9!@#$%^&*)(+=._-]*$/));
+    if (nameCollection === "") {
+      setErrorMessage("Collection Name is required");
+      setShowError(true);
+    } else if (!nameCollection.match(/^[a-zA-Z0-9!@#$%^&*)(+=._-]*$/)) {
+      setErrorMessage("Collection name doesnt have a special char");
+      setShowError(true);
+    } else if (
+      state.data.filter((val) => val.name === nameCollection).length > 0
+    ) {
+      setErrorMessage("Collection name already exist");
+      setShowError(true);
+    } else {
+      dispatch({
+        type: "ADD_COLLECTION",
+        payload: { name, collectionItem: [] },
+      });
+      setShowModalAdd(false);
+      setNameCollection("");
+      setErrorMessage("");
+      setShowError(false);
+    }
   };
 
   const handleCloseAddModal = () => {
     setShowModalAdd(false);
     setNameCollection("");
+    setErrorMessage("");
+    setShowError(false);
   };
 
   const handleClickRemove = (name) => {
@@ -96,6 +119,11 @@ function Collection() {
             onChange={(e) => setNameCollection(e.target.value)}
             value={nameCollection}
           />
+          {showError && (
+            <p className="text-red-500 font-poppins text-xs md:text-sm font-normal">
+              {errorMessage}
+            </p>
+          )}
           <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b space-x-2">
             <button
               className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"

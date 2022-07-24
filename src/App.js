@@ -12,6 +12,7 @@ function App() {
         <Route path={ROUTES.ANIME_DETAIL} element={<Template><AnimeDetail/></Template>}></Route>
         <Route path={ROUTES.COLLECTION_DETAIL} element={<Template><CollectionDetail /></Template>}></Route>
         <Route path={ROUTES.PAGE_NOT_FOUND} element={<Template><PageNotFound/></Template>}></Route>
+        <Route path='*' element={<PageNotFound />}></Route>
       </Routes>
     </Router>
   );

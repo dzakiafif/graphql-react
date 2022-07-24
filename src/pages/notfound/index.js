@@ -1,4 +1,3 @@
-import { Navbar } from "../../components";
 import { NotFound } from "../../assets"
 
 function PageNotFound(){
