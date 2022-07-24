@@ -19,14 +19,14 @@ export const AnimeProvider = ({ children }) => {
 }
 
 export const DarkLightProvider = ({ children }) => {
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || false);
 
     useEffect(() => {
       localStorage.setItem('theme', theme);
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme("dark")
+        setTheme(!theme)
     }
   
     return (

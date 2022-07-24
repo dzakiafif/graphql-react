@@ -8,7 +8,7 @@ function Template({ children }){
     return(
        <>
         <Navbar />
-            <div className={theme === "dark" ? "bg-gray-200" : "bg-white"}>
+            <div className={theme ? "bg-gray-200" : "bg-white"}>
                 <div className="h-max">
                     {children}
                 </div>

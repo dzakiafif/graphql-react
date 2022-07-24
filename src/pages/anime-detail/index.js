@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { DETAIL_ANIME } from "../../graphql/queries";
-import { AnimeContext } from "../../context";
+import { AnimeContext, DarkLightContext } from "../../context";
 import {
   Breadcrumb,
   Label,
@@ -18,7 +18,9 @@ const AnimeDetail = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const params = useParams();
+  const location = useLocation();
   const { state, dispatch } = useContext(AnimeContext);
+  const { theme } = useContext(DarkLightContext);
   const [names, setNames] = useState("");
   const [checkedBox, setCheckedBox] = useState({});
   const [showError, setShowError] = useState(false);
@@ -116,7 +118,7 @@ const AnimeDetail = () => {
                 </h1>
 
                 <button
-                  className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
+                  className={`text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm ${location.pathname.includes('/anime-detail') && theme ? 'bg-gray-700' : 'bg-blue-700'} focus:outline-none ease-linear transition-all duration-150`}
                   type="button"
                   onClick={() => state.data?.map(val => val.collectionItem).flat().some(value => value.id === Number(params.id)) ? false : setShowModalAdd(true)}
                 >

@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AnimeContext } from "../../context";
+import { useNavigate, useLocation } from "react-router-dom";
+import { AnimeContext, DarkLightContext } from "../../context";
 import { Breadcrumb, HeadingTitle, Modal } from "../../components";
 
 function Collection() {
   const { state, dispatch } = useContext(AnimeContext);
+  const { theme } = useContext(DarkLightContext);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -13,6 +14,7 @@ function Collection() {
   const [nameCollectionRemove, setNameCollectionRemove] = useState("");
   const [nameCollection, setNameCollection] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleAddCollection = (name) => {
     if (nameCollection === "") {
@@ -71,7 +73,7 @@ function Collection() {
         <div className="flex flex-row justify-between">
           <HeadingTitle title="My Anime Collection" />
           <button
-            className="text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm bg-blue-700 focus:outline-none ease-linear transition-all duration-150"
+            className={`text-white p-2 rounded-lg background-transparent font-bold uppercase px-5 text-xs md:text-sm ${location.pathname === '/collection' && theme ? 'bg-gray-700' : 'bg-blue-700'} focus:outline-none ease-linear transition-all duration-150`}
             type="button"
             onClick={() => setShowModalAdd(true)}
           >
