@@ -12,6 +12,12 @@ module.exports = {
       xl: '1280px',
       '2xl': '1536px',
     },
+    extend: {
+      animation: {
+          bounce200: 'bounce 1s infinite 200ms',
+          bounce400: 'bounce 1s infinite 400ms',
+      },
+  },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
